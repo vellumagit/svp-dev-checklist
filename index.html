@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVP Developer Checklist — April 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #ffffff;
+    color: #1a1a1a;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .header-eyebrow {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 10px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 14px;
+    color: #666;
+    max-width: 520px;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .meta-pill {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid #e5e5e5;
+    color: #666;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 12px 0;
+    z-index: 100;
+  }
+
+  .progress-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-label { font-size: 12px; color: #999; white-space: nowrap; }
+
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: #f0f0f0;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: #111;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .progress-count { font-size: 12px; color: #999; white-space: nowrap; min-width: 48px; text-align: right; }
+
+  /* TABLE SECTION */
+  .table-section {
+    padding: 36px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #aaa;
+    margin-bottom: 6px;
+  }
+
+  .section-heading {
+    font-size: 17px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 4px;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 20px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #bbb;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #555;
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .done { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+  .fail { background: #fff5f5; color: #dc2626; border: 1px solid #fecaca; }
+  .warn { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+
+  /* CHECKLIST SECTIONS */
+  .cl-section {
+    padding: 36px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .cl-section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .dot-red { background: #ef4444; }
+  .dot-orange { background: #f97316; }
+  .dot-yellow { background: #eab308; }
+
+  /* ITEMS */
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+
+  .item {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .item:hover { border-color: #ccc; }
+  .item.checked { border-color: #bbf7d0; background: #fdfffe; }
+
+  .item-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .checkbox {
+    flex-shrink: 0;
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid #d5d5d5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    transition: all 0.15s;
+    background: #fff;
+  }
+
+  .item.checked .checkbox { background: #16a34a; border-color: #16a34a; }
+  .checkbox svg { display: none; }
+  .item.checked .checkbox svg { display: block; }
+
+  .item-num { flex-shrink: 0; font-size: 11px; color: #ccc; margin-top: 3px; min-width: 18px; }
+
+  .item-body { flex: 1; }
+
+  .item-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .item.checked .item-title { color: #aaa; text-decoration: line-through; text-decoration-color: #ccc; }
+
+  .item-desc { font-size: 13px; color: #888; line-height: 1.5; }
+  .item.checked .item-desc { color: #bbb; }
+
+  .who {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 1px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .who-dev { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
+  .who-alex { background: #fff7ed; color: #f97316; border: 1px solid #fed7aa; }
+
+  .expand-btn {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.1s;
+    color: #aaa;
+  }
+
+  .expand-btn:hover { background: #f0f0f0; }
+  .expand-btn svg { transition: transform 0.2s; }
+  .item.open .expand-btn svg { transform: rotate(180deg); }
+
+  .item-detail {
+    display: none;
+    border-top: 1px solid #f0f0f0;
+    padding: 16px;
+    background: #fafafa;
+  }
+
+  .item.open .item-detail { display: block; }
+
+  .detail-note {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .detail-note strong { color: #333; font-weight: 500; }
+
+  .detail-warn {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #92400e;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .code-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #bbb;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  .code-wrap { position: relative; margin-bottom: 12px; }
+
+  .code-block {
+    background: #111;
+    color: #d4d4d4;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background: #222;
+    color: #aaa;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+
+  .copy-btn:hover { background: #333; color: #fff; }
+  .copy-btn.copied { border-color: #16a34a; color: #4ade80; }
+
+  .kw { color: #c792ea; }
+  .str { color: #c3e88d; }
+  .tag { color: #89ddff; }
+  .attr { color: #ffcb6b; }
+
+  .footer {
+    padding: 32px 0 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-text { font-size: 12px; color: #ccc; }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 16px; }
+    th:last-child, td:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <div class="header-eyebrow">svitvideoproduction.ca &middot; seo-technical</div>
+    <h1>Developer Checklist</h1>
+    <p>Verified against the live site on April 13, 2026. All items confirmed outstanding unless marked done in the table below.</p>
+    <div class="header-meta">
+      <span class="meta-pill">&check; Live site verified</span>
+      <span class="meta-pill">15 items</span>
+      <span class="meta-pill">April 13, 2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="container">
+    <div class="progress-inner">
+      <span class="progress-label">Progress</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-count" id="progressCount">0 / 15</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STATUS TABLE -->
+  <div class="table-section">
+    <div class="section-eyebrow">Live site check &mdash; April 13, 2026</div>
+    <div class="section-heading">What's already done</div>
+    <div class="section-sub">Confirmed from live crawl and Google Rich Results Test before this checklist was written.</div>
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Status</th><th>Evidence</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>H1 tag</td><td><span class="badge done">&check; Done</span></td><td>&ldquo;Toronto&rsquo;s Drone Videography Company for Real Estate &amp; Commercial Projects&rdquo;</td></tr>
+        <tr><td>FAQ section (5 questions)</td><td><span class="badge done">&check; Done</span></td><td>Confirmed live on homepage</td></tr>
+        <tr><td>Services / packages section</td><td><span class="badge done">&check; Done</span></td><td>4 packages live</td></tr>
+        <tr><td>GTA coverage paragraph</td><td><span class="badge done">&check; Done</span></td><td>Confirmed in About section</td></tr>
+        <tr><td>TC certified copy</td><td><span class="badge done">&check; Done</span></td><td>&ldquo;Transport Canada - certified and fully insured&rdquo;</td></tr>
+        <tr><td>FAQ schema</td><td><span class="badge done">&check; Done</span></td><td>Rich Results Test: 1 valid, no issues</td></tr>
+        <tr><td>Review + Video schema</td><td><span class="badge done">&check; Done</span></td><td>1 review + 9 video items, all valid</td></tr>
+        <tr><td>LocalBusiness schema</td><td><span class="badge warn">&ofcir; Needs update</span></td><td>2 valid, non-critical issues &mdash; missing areaServed, priceRange, hours</td></tr>
+        <tr><td>Title tag</td><td><span class="badge fail">&cross; Not done</span></td><td>Still 89 chars &mdash; confirmed in live crawl</td></tr>
+        <tr><td>/drone-services/real-estate</td><td><span class="badge fail">&cross; Still live</span></td><td>Appears in site: search result</td></tr>
+        <tr><td>Service schema</td><td><span class="badge fail">&cross; Missing</span></td><td>Not detected in Rich Results Test</td></tr>
+        <tr><td>Sitemap.xml</td><td><span class="badge fail">&cross; Not found</span></td><td>403 on direct fetch</td></tr>
+        <tr><td>GA4 conversion events</td><td><span class="badge fail">&cross; Not done</span></td><td>0 key events in GA4 report</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 1: CRITICAL -->
+  <div class="cl-section">
+    <div class="cl-section-header">
+      <div class="dot dot-red"></div>
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:4px">Critical &mdash; Do first</div>
+        <div class="section-heading">Ranking blockers</div>
+        <div class="section-sub">Actively hurting search performance today. Do all four in one session (~45 min).</div>
+      </div>
+    </div>
+    <div class="checklist">
+
+      <div class="item" data-id="1">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">01</span>
+          <div class="item-body">
+            <div class="item-title">Fix the title tag <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Still 89 characters &mdash; Google is truncating it in search results and suppressing clicks. Needs to be 49 chars.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Find <strong>&lt;title&gt;</strong> in <strong>&lt;head&gt;</strong> and replace the entire element. The PDF&rsquo;s Step 1 incorrectly kept the 89-char version &mdash; this is the correct fix.</div>
+          <div class="code-label">Replace with</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">&lt;title&gt;Drone Videography Toronto | Svit Video Production&lt;/title&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="2">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">02</span>
+          <div class="item-body">
+            <div class="item-title">Verify and fix the meta description <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">The PDF&rsquo;s version is 178 chars &mdash; 20 over Google&rsquo;s limit, with a phone emoji. Check view-source first before replacing.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-warn">Open view-source first and check what&rsquo;s there. If the meta is already under 158 chars and keyword-rich &mdash; share it before changing. Only replace if it matches the overlong PDF version.</div>
+          <div class="code-label">Replace with (143 chars)</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">&lt;meta name="description" content="Toronto's certified drone videography company for real estate &amp; commercial projects. Fully insured, 48-hr delivery. Free quote: (647) 290-6941."&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="3">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">03</span>
+          <div class="item-body">
+            <div class="item-title">Check status of two legacy pages <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">/drone-services/photo-and-video and /aerial-videography-services weren&rsquo;t in today&rsquo;s site: search. May already be redirected &mdash; confirm.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Open each URL in a browser. If they redirect to homepage &mdash; &check; done. If they still load as pages &mdash; 301 redirect both to <strong>https://svitvideoproduction.ca/</strong></div>
+          <div class="code-label">Check these URLs</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">svitvideoproduction.ca/drone-services/photo-and-video
+svitvideoproduction.ca/aerial-videography-services</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="4">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">04</span>
+          <div class="item-body">
+            <div class="item-title">301 redirect /drone-services/real-estate <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Confirmed live and indexed in today&rsquo;s crawl. Has an identical title tag to the homepage &mdash; active duplicate content problem.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Add via server config, .htaccess, or your hosting panel&rsquo;s redirect manager.</div>
+          <div class="code-label">Redirect rule</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">/drone-services/real-estate  &rarr;  301  &rarr;  https://svitvideoproduction.ca/</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 2: HIGH -->
+  <div class="cl-section">
+    <div class="cl-section-header">
+      <div class="dot dot-orange"></div>
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:4px">High &mdash; Same session</div>
+        <div class="section-heading">Schema &amp; infrastructure</div>
+        <div class="section-sub">Schema partially done &mdash; needs upgrade and one new block. Sitemap and canonical unconfirmed.</div>
+      </div>
+    </div>
+    <div class="checklist">
+
+      <div class="item" data-id="5">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">05</span>
+          <div class="item-body">
+            <div class="item-title">Replace LocalBusiness schema <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Already live but showing non-critical issues &mdash; missing areaServed, priceRange, and hours. Replace the existing block entirely. Do not add a second one alongside it.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Open view-source &rarr; search for <strong>application/ld+json</strong> &rarr; find the LocalBusiness block &rarr; replace entirely with the block below. Paste into <strong>&lt;head&gt;</strong>.</div>
+          <div class="detail-warn">Replace the existing block &mdash; do not add this alongside it. Two LocalBusiness blocks will cause conflicts.</div>
+          <div class="code-label">Paste into &lt;head&gt; &mdash; replace existing LocalBusiness block</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Svit Video Production",
+  "image": "https://cdn.svitvideoproduction.ca/img/home/logo-simple-white.svg",
+  "logo": "https://cdn.svitvideoproduction.ca/img/home/logo-simple-white.svg",
+  "url": "https://svitvideoproduction.ca/",
+  "telephone": "+16472906941",
+  "email": "info@svp.video",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Toronto",
+    "addressRegion": "ON",
+    "addressCountry": "CA"
+  },
+  "areaServed": [
+    {"@type": "City", "name": "Toronto"},
+    {"@type": "City", "name": "North York"},
+    {"@type": "City", "name": "Scarborough"},
+    {"@type": "City", "name": "Etobicoke"},
+    {"@type": "City", "name": "Mississauga"},
+    {"@type": "City", "name": "Brampton"},
+    {"@type": "City", "name": "Vaughan"},
+    {"@type": "City", "name": "Markham"},
+    {"@type": "City", "name": "Richmond Hill"},
+    {"@type": "City", "name": "Oakville"},
+    {"@type": "City", "name": "Burlington"}
+  ],
+  "priceRange": "$$",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00", "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday"],
+      "opens": "08:00", "closes": "17:00"
+    }
+  ],
+  "description": "Toronto's certified drone videography company for real estate agents, developers, and contractors. Transport Canada Advanced Operations certified. Fully insured.",
+  "sameAs": [
+    "https://maps.app.goo.gl/7PuM1bQqqdinTpfp7",
+    "https://www.instagram.com/svitvideoproduction",
+    "https://www.facebook.com/SVP.videography",
+    "https://www.linkedin.com/company/svit-video-production",
+    "https://threads.net/svitvideoproduction"
+  ]
+}
+&lt;/script&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="6">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">06</span>
+          <div class="item-body">
+            <div class="item-title">Add Service schema <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Not detected in Rich Results Test. New addition &mdash; paste before &lt;/body&gt;, nothing to replace.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="code-label">Paste before &lt;/body&gt; &mdash; new block, nothing to replace</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Drone Videography Toronto",
+  "description": "Cinematic 4K drone videography and aerial photography for real estate agents, developers, and corporate clients across Toronto and the GTA. Transport Canada Advanced Operations certified. Fully insured. 48-hour delivery.",
+  "provider": {
+    "@type": "ProfessionalService",
+    "name": "Svit Video Production",
+    "url": "https://svitvideoproduction.ca/",
+    "telephone": "+16472906941"
+  },
+  "areaServed": [
+    {"@type": "City", "name": "Toronto"},
+    {"@type": "City", "name": "Mississauga"},
+    {"@type": "City", "name": "Vaughan"},
+    {"@type": "City", "name": "Markham"},
+    {"@type": "City", "name": "Scarborough"},
+    {"@type": "City", "name": "Etobicoke"},
+    {"@type": "City", "name": "Richmond Hill"},
+    {"@type": "City", "name": "Oakville"},
+    {"@type": "City", "name": "Burlington"}
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Aerial Drone Services",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Aerial Photo Package", "description": "10-15 MLS-ready aerial stills. Same-day raw access. 48-hour delivery."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Aerial Video Package", "description": "Up to 45 seconds of 4K stabilized aerial video. Cinematic colour-grading. 48-hour delivery."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Combo Package", "description": "Full aerial photo and video coverage. 10-15 stills and up to 45 seconds of 4K drone video."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Construction Progress Documentation", "description": "Multi-site aerial documentation for construction projects. Milestone captures, investor-ready footage."}}
+    ]
+  }
+}
+&lt;/script&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="7">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">07</span>
+          <div class="item-body">
+            <div class="item-title">Verify FAQ schema matches live page text <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Showing as valid &mdash; likely fine. Confirm the JSON-LD text matches the 5 live FAQ answers word for word. Only replace if there&rsquo;s a mismatch.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Open view-source &rarr; search for <strong>FAQPage</strong> &rarr; compare each question and answer in the JSON-LD against the live text on the page. They must match character-for-character. If they match &mdash; mark done. If they don&rsquo;t &mdash; flag for Brian to regenerate the FAQ block.</div>
+        </div>
+      </div>
+
+      <div class="item" data-id="8">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">08</span>
+          <div class="item-body">
+            <div class="item-title">Verify canonical tag is present <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Not confirmable from the live crawl &mdash; check view-source and add if missing.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Open view-source &rarr; search for <strong>rel="canonical"</strong>. If it&rsquo;s pointing to the correct URL &mdash; leave it. If missing, add to <strong>&lt;head&gt;</strong>:</div>
+          <div class="code-label">Add to &lt;head&gt; if missing</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">&lt;link rel="canonical" href="https://svitvideoproduction.ca/" /&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="9">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">09</span>
+          <div class="item-body">
+            <div class="item-title">Check and fix robots.txt <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Returned 403 during crawl &mdash; status unknown. Open in browser and confirm nothing important is blocked.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Open <strong>https://svitvideoproduction.ca/robots.txt</strong> in a browser. If it&rsquo;s clean and open &mdash; just add the Sitemap line if missing. If it&rsquo;s blocking pages or absent, replace with:</div>
+          <div class="code-label">Clean robots.txt</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">User-agent: *
+Allow: /
+
+Sitemap: https://svitvideoproduction.ca/sitemap.xml</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="10">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">10</span>
+          <div class="item-body">
+            <div class="item-title">Create and submit sitemap.xml <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">No sitemap found. Upload to the domain root and submit in Google Search Console.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Save as <strong>sitemap.xml</strong>, upload to <strong>https://svitvideoproduction.ca/sitemap.xml</strong>. Then: GSC &rarr; Sitemaps &rarr; enter <strong>sitemap.xml</strong> &rarr; Submit.</div>
+          <div class="code-label">sitemap.xml</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://svitvideoproduction.ca/&lt;/loc&gt;
+    &lt;changefreq&gt;monthly&lt;/changefreq&gt;
+    &lt;priority&gt;1.0&lt;/priority&gt;
+  &lt;/url&gt;
+&lt;/urlset&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="11">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">11</span>
+          <div class="item-body">
+            <div class="item-title">Request re-indexing in GSC <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Do this last &mdash; after all changes above are deployed. Tells Google to re-crawl the updated page immediately.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">GSC &rarr; URL Inspection &rarr; paste <strong>https://svitvideoproduction.ca/</strong> &rarr; Request Indexing. Then verify schema is passing: <strong>search.google.com/test/rich-results</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 3: ANALYTICS -->
+  <div class="cl-section">
+    <div class="cl-section-header">
+      <div class="dot dot-orange"></div>
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:4px">High &mdash; Alex</div>
+        <div class="section-heading">Analytics</div>
+        <div class="section-sub">Without conversion events, all ad spend and campaign measurement is blind.</div>
+      </div>
+    </div>
+    <div class="checklist">
+
+      <div class="item" data-id="12">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">12</span>
+          <div class="item-body">
+            <div class="item-title">Configure GA4 conversion events <span class="who who-alex">Alex</span></div>
+            <div class="item-desc">0 key events confirmed in GA4. There are 3 CPC sessions with no way to know if they converted. Fix before any further ad spend.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Set key events (conversions) for these three user actions. GA4 &rarr; Admin &rarr; Events &rarr; Mark as conversion. The developer may need to add GTM triggers if events aren&rsquo;t firing yet.</div>
+          <div class="code-label">Events to configure</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">1. "Let's Talk" button click
+2. Contact form submission
+3. Phone number tap (tel: link click)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 4: MEDIUM -->
+  <div class="cl-section">
+    <div class="cl-section-header">
+      <div class="dot dot-yellow"></div>
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:4px">Medium &mdash; When time allows</div>
+        <div class="section-heading">Accessibility &amp; performance</div>
+        <div class="section-sub">Not ranking blockers. Quick wins once the critical items are done.</div>
+      </div>
+    </div>
+    <div class="checklist">
+
+      <div class="item" data-id="13">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">13</span>
+          <div class="item-body">
+            <div class="item-title">Fix Alex photo alt text <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Confirmed still wrong in live crawl &mdash; missing professional context.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="code-label">Find</div>
+          <div class="code-wrap"><div class="code-block">alt="Alex Svit flying a Drone"</div></div>
+          <div class="code-label">Replace with</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">alt="Alex Svit, certified drone pilot — Svit Video Production"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="14">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">14</span>
+          <div class="item-body">
+            <div class="item-title">Fix decorative icon alt text <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">Play button, chat icon, menu icon, arrow, quote icon all have descriptive alt text &mdash; should be empty so screen readers skip them.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Decorative icons carry no informational value. Setting <strong>alt=""</strong> tells screen readers to skip them.</div>
+          <div class="code-label">Change all decorative icon imgs from descriptive text to</div>
+          <div class="code-wrap">
+            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
+            <div class="code-block">alt=""</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" data-id="15">
+        <div class="item-main" onclick="handleCheck(event,this)">
+          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="item-num">15</span>
+          <div class="item-body">
+            <div class="item-title">Run Core Web Vitals <span class="who who-dev">Developer</span></div>
+            <div class="item-desc">GA4 shows 12-second average engagement time. Worth checking if it&rsquo;s a load issue &mdash; quick to run, easy to share.</div>
+          </div>
+          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="item-detail">
+          <div class="detail-note">Go to <strong>https://pagespeed.web.dev/</strong> &rarr; enter the homepage URL &rarr; run report &rarr; share with Brian. The background video autoplay on mobile is a likely contributor if LCP score is low.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-text">Svit Video Production &middot; seo-technical v1.0</span>
+    <span class="footer-text">April 13, 2026 &middot; 15 items</span>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 15;
+
+  function updateProgress() {
+    const checked = document.querySelectorAll('.item.checked').length;
+    document.getElementById('progressFill').style.width = (checked / TOTAL * 100) + '%';
+    document.getElementById('progressCount').textContent = checked + ' / ' + TOTAL;
+  }
+
+  function handleCheck(e, el) {
+    if (e.target.closest('.expand-btn')) return;
+    const item = el.closest('.item');
+    item.classList.toggle('checked');
+    updateProgress();
+    localStorage.setItem('svp2-' + item.dataset.id, item.classList.contains('checked'));
+  }
+
+  function toggleDetail(e, btn) {
+    e.stopPropagation();
+    btn.closest('.item').classList.toggle('open');
+  }
+
+  function copyCode(e, btn) {
+    e.stopPropagation();
+    const block = btn.nextElementSibling;
+    const text = block.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  document.querySelectorAll('.item').forEach(item => {
+    if (localStorage.getItem('svp2-' + item.dataset.id) === 'true') {
+      item.classList.add('checked');
+    }
+  });
+
+  updateProgress();
+</script>
+</body>
+</html>
