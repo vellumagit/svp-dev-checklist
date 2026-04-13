@@ -376,7 +376,7 @@
     <p>Verified against the live site on April 13, 2026. All items confirmed outstanding unless marked done in the table below.</p>
     <div class="header-meta">
       <span class="meta-pill">&check; Live site verified</span>
-      <span class="meta-pill">15 items</span>
+      <span class="meta-pill">14 items</span>
       <span class="meta-pill">April 13, 2026</span>
     </div>
   </div>
@@ -416,7 +416,7 @@
         <tr><td>/drone-services/real-estate</td><td><span class="badge fail">&cross; Still live</span></td><td>Appears in site: search result</td></tr>
         <tr><td>Service schema</td><td><span class="badge fail">&cross; Missing</span></td><td>Not detected in Rich Results Test</td></tr>
         <tr><td>Sitemap.xml</td><td><span class="badge fail">&cross; Not found</span></td><td>403 on direct fetch</td></tr>
-        <tr><td>GA4 conversion events</td><td><span class="badge fail">&cross; Not done</span></td><td>0 key events in GA4 report</td></tr>
+
       </tbody>
     </table>
   </div>
@@ -757,44 +757,7 @@ Sitemap: https://svitvideoproduction.ca/sitemap.xml</div>
     </div>
   </div>
 
-  <!-- SECTION 3: ANALYTICS -->
-  <div class="cl-section">
-    <div class="cl-section-header">
-      <div class="dot dot-orange"></div>
-      <div>
-        <div class="section-eyebrow" style="margin-bottom:4px">High &mdash; Alex</div>
-        <div class="section-heading">Analytics</div>
-        <div class="section-sub">Without conversion events, all ad spend and campaign measurement is blind.</div>
-      </div>
-    </div>
-    <div class="checklist">
-
-      <div class="item" data-id="12">
-        <div class="item-main" onclick="handleCheck(event,this)">
-          <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="item-num">12</span>
-          <div class="item-body">
-            <div class="item-title">Configure GA4 conversion events <span class="who who-alex">Alex</span></div>
-            <div class="item-desc">0 key events confirmed in GA4. There are 3 CPC sessions with no way to know if they converted. Fix before any further ad spend.</div>
-          </div>
-          <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="item-detail">
-          <div class="detail-note">Set key events (conversions) for these three user actions. GA4 &rarr; Admin &rarr; Events &rarr; Mark as conversion. The developer may need to add GTM triggers if events aren&rsquo;t firing yet.</div>
-          <div class="code-label">Events to configure</div>
-          <div class="code-wrap">
-            <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
-            <div class="code-block">1. "Let's Talk" button click
-2. Contact form submission
-3. Phone number tap (tel: link click)</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- SECTION 4: MEDIUM -->
+  <!-- SECTION 3: MEDIUM -->
   <div class="cl-section">
     <div class="cl-section-header">
       <div class="dot dot-yellow"></div>
@@ -806,10 +769,10 @@ Sitemap: https://svitvideoproduction.ca/sitemap.xml</div>
     </div>
     <div class="checklist">
 
-      <div class="item" data-id="13">
+      <div class="item" data-id="12">
         <div class="item-main" onclick="handleCheck(event,this)">
           <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="item-num">13</span>
+          <span class="item-num">12</span>
           <div class="item-body">
             <div class="item-title">Fix Alex photo alt text <span class="who who-dev">Developer</span></div>
             <div class="item-desc">Confirmed still wrong in live crawl &mdash; missing professional context.</div>
@@ -827,10 +790,10 @@ Sitemap: https://svitvideoproduction.ca/sitemap.xml</div>
         </div>
       </div>
 
-      <div class="item" data-id="14">
+      <div class="item" data-id="13">
         <div class="item-main" onclick="handleCheck(event,this)">
           <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="item-num">14</span>
+          <span class="item-num">13</span>
           <div class="item-body">
             <div class="item-title">Fix decorative icon alt text <span class="who who-dev">Developer</span></div>
             <div class="item-desc">Play button, chat icon, menu icon, arrow, quote icon all have descriptive alt text &mdash; should be empty so screen readers skip them.</div>
@@ -847,10 +810,10 @@ Sitemap: https://svitvideoproduction.ca/sitemap.xml</div>
         </div>
       </div>
 
-      <div class="item" data-id="15">
+      <div class="item" data-id="14">
         <div class="item-main" onclick="handleCheck(event,this)">
           <div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="item-num">15</span>
+          <span class="item-num">14</span>
           <div class="item-body">
             <div class="item-title">Run Core Web Vitals <span class="who who-dev">Developer</span></div>
             <div class="item-desc">GA4 shows 12-second average engagement time. Worth checking if it&rsquo;s a load issue &mdash; quick to run, easy to share.</div>
@@ -867,13 +830,13 @@ Sitemap: https://svitvideoproduction.ca/sitemap.xml</div>
 
   <div class="footer">
     <span class="footer-text">Svit Video Production &middot; seo-technical v1.0</span>
-    <span class="footer-text">April 13, 2026 &middot; 15 items</span>
+    <span class="footer-text">April 13, 2026 &middot; 14 items</span>
   </div>
 
 </div>
 
 <script>
-  const TOTAL = 15;
+  const TOTAL = 14;
 
   function updateProgress() {
     const checked = document.querySelectorAll('.item.checked').length;
