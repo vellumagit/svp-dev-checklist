@@ -444,7 +444,7 @@
           <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         </div>
         <div class="item-detail">
-          <div class="detail-note">Find <strong>&lt;title&gt;</strong> in <strong>&lt;head&gt;</strong> and replace the entire element. The PDF&rsquo;s Step 1 incorrectly kept the 89-char version &mdash; this is the correct fix.</div>
+          <div class="detail-note">Find <strong>&lt;title&gt;</strong> in <strong>&lt;head&gt;</strong> and replace the entire element with the line below.</div>
           <div class="code-label">Replace with</div>
           <div class="code-wrap">
             <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
@@ -459,12 +459,12 @@
           <span class="item-num">02</span>
           <div class="item-body">
             <div class="item-title">Verify and fix the meta description <span class="who who-dev">Developer</span></div>
-            <div class="item-desc">The PDF&rsquo;s version is 178 chars &mdash; 20 over Google&rsquo;s limit, with a phone emoji. Check view-source first before replacing.</div>
+            <div class="item-desc">The current meta description may be over Google&rsquo;s 158-character limit. Paste the version below &mdash; it&rsquo;s 143 characters and is the correct copy to use.</div>
           </div>
           <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         </div>
         <div class="item-detail">
-          <div class="detail-warn">Open view-source first and check what&rsquo;s there. If the meta is already under 158 chars and keyword-rich &mdash; share it before changing. Only replace if it matches the overlong PDF version.</div>
+          <div class="detail-note">Find or add <strong>&lt;meta name="description"&gt;</strong> in <strong>&lt;head&gt;</strong> and paste the line below. This is 143 characters &mdash; within Google&rsquo;s limit.</div>
           <div class="code-label">Replace with (143 chars)</div>
           <div class="code-wrap">
             <button class="copy-btn" onclick="copyCode(event,this)">Copy</button>
@@ -665,7 +665,7 @@ svitvideoproduction.ca/aerial-videography-services</div>
           <div class="expand-btn" onclick="toggleDetail(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4.5L6 8L10 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         </div>
         <div class="item-detail">
-          <div class="detail-note">Open view-source &rarr; search for <strong>FAQPage</strong> &rarr; compare each question and answer in the JSON-LD against the live text on the page. They must match character-for-character. If they match &mdash; mark done. If they don&rsquo;t &mdash; flag for Brian to regenerate the FAQ block.</div>
+          <div class="detail-note">Open view-source &rarr; search for <strong>FAQPage</strong> &rarr; compare each question and answer in the JSON-LD against the live text on the page. They must match character-for-character. If they match &mdash; mark done. If they don&rsquo;t &mdash; leave it as-is and let us know so we can regenerate the FAQ block.</div>
         </div>
       </div>
 
